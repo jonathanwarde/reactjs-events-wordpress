@@ -34,3 +34,29 @@ add_filter('script_loader_tag', 'shapeSpace_script_loader_tag', 10, 3);
 
 
 
+function enqueue_vite_assets() {
+    $assets_dir = get_template_directory() . '/dist/assets/';
+    $assets_uri = get_template_directory_uri() . '/dist/assets/';
+    $js_files  = glob( $assets_dir . 'reactevents-*.js' );
+    $css_files = glob( $assets_dir . 'main-*.css' );
+    if ( ! empty( $js_files ) ) {
+        $js_file = basename( $js_files[0] );
+        wp_enqueue_script(
+            'reactevents',
+            $assets_uri . $js_file,
+            [],   
+            null, 
+            true  
+        );
+    }
+    if ( ! empty( $css_files ) ) {
+        $css_file = basename( $css_files[0] );
+        wp_enqueue_style(
+            'topsecret-main',
+            $assets_uri . $css_file,
+            [],   
+            null  
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_vite_assets' );
