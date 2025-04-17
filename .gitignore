@@ -1,0 +1,13 @@
+*.svg
+/node_modules
+/dist
+/assets/dist/*
+/fullcalendar-5.11.3
+.ttf
+/assets/dist/topsecret3.min.css.map
+node_modules
+dist/
+.env
+.DS_Store
+coverage/
+.vscode/
