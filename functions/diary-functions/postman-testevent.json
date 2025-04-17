@@ -1,0 +1,40 @@
+{
+  "info": {
+    "_postman_id": "7d33db68-511e-4c5a-9025-94e180009748",
+    "name": "Create Event Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create New Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"New Event\",\"content\":\"This is a new event.\",\"start_time\":\"2023-05-29T10:00:00\",\"end_time\":\"2023-05-29T18:00:00\",\"act\":[{\"partners_performer_id\":\"123\"},{\"partners_performer_id\":\"456\"}]}"
+        },
+        "url": {
+          "raw": "https://tscc.local/wp-json/diary/v1/createevent",
+          "protocol": "http",
+          "host": [
+            "tscc",
+            "local"
+          ],
+          "path": [
+            "wp-json",
+            "diary",
+            "v1",
+            "createevent"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
