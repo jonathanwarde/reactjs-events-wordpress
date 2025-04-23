@@ -1,0 +1,34 @@
+/* src/vitetest.css */
+
+/* 1) Import all of Tailwind’s layers in one go */
+@import "tailwindcss";
+
+
+/* 2) Then your custom utilities (wrapped in a layer) */
+@layer utilities {
+  .test-border {
+    @apply border-4 border-purple-600;
+  }
+  .font-heading {
+    font-family: var(--font-display);
+  }
+  .font-regular {
+    font-family: var(--font-body);
+  }
+  .font-body {
+    font-family: var(--font-bodybold);
+  }
+  .custom-clip-path:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -.1em;
+    width: 100%;
+    height: calc(100% - .05em);
+    -webkit-clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+    clip-path: polygon(0 0, 100% 8%, 100% 93%, 0 100%);
+    background-color: #fff;
+    z-index: -1;
+  }
+}
+

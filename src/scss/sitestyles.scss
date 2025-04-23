@@ -1,0 +1,13 @@
+
+@import "vars";
+@import "base/fonts";
+//@import "base/typography";
+@import "components/swiper-comedians";
+@import "scripts/swiper";
+
+
+:root {
+    --font-body: 'QuicksandRegular', sans-serif;
+    --font-bodybold: 'QuicksandBold', sans-serif;
+    --font-display: 'SpecialElite', serif;
+  }

@@ -7,9 +7,9 @@ get_header();
 
 <section class="flex justify-center items-center flex-col text-center relative bg-black h-[calc(100vh-200px)] ">
     <div class="z-[1] text-white">
-        <h1>Comedy's worst kept secret</h1>
-        <h2 id="whatson">The UK's highest rated comedy club</h2>
-        <p>Top quality comedy nights every day of the week.</p>
+        <h1 class="font-heading text-3xl sm:text-5xl uppercase text-red-500">Comedy's worst kept secret</h1>
+        <h2 id="whatson" class="w-fit relative m-auto font-heading text-black custom-clip-path">The UK's highest rated comedy club</h2>
+        <p class="body-regular">Top quality comedy nights every day of the week.</p>
     </div>
     <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/audience.jpg" class="absolute object-cover top-0 h-full z-[0]">
 </section>

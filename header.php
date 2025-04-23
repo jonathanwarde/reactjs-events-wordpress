@@ -7,12 +7,12 @@
     <meta name="theme-color" content="#e94840" />
     <?php wp_head(); ?>
     <link rel="preload" href="<?php echo get_template_directory_uri() ?>/assets/fonts/SpecialElite-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="<?php echo get_template_directory_uri() ?>/assets/fonts/Quicksand-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="<?php echo get_template_directory_uri() ?>/assets/fonts/Quicksand-Bold.ttf" as="font" type="font/ttf" crossorigin>
+   
     <title><?php wp_title() ?></title>
 </head>
-<body <?php body_class('topsecret, bg-black flex flex-col m-0 min-w-[320px] h-full min-h-screen'); ?>>
+<body <?php body_class('topsecret, bg-black flex flex-col m-0 min-w-[320px] h-full min-h-screen font-regular'); ?>>
 <?php
     $displayBanner = get_field("display_banner", "option");
     if(true === $displayBanner) {
@@ -41,14 +41,14 @@
     
     <div class="flex h-full items-start pt-2 pr-2">
         <div class="flex">
-            <label for="toggle-darkmode" class="flex pl-3.5 pr-3.5 text-xl items-center">
+            <label for="toggle-darkmode" class="flex pl-3.5 pr-3.5 text-sm items-center">
                 <input type="checkbox" id="toggle-darkmode" class="sr-only">
                 <div class="inline-block bg-red-500 rounded-full w-12 h-5 relative align-middle transition-colors duration-200 after:content-[''] before:content-[''] before:block before:bg-gradient-to-b before:from-white before:to-gray-200 before:rounded-full before:shadow-[0_0_0_1px_rgba(0,_0,_0,_0.25)] before:w-4 before:h-4 before:absolute before:top-0.5 before:left-0.75 before:transition-all before:duration-200"></div>
-                <span class="ml-1 relative px-4 text-white">Lighten up</span>
+                <span class="ml-1 relative px-4 text-white font-heading">Lighten up</span>
             </label>
-            <a href="/find-us/" class="hidden sm:flex text-white">
-                <span class="bg-[#e94840] w-[23px] h-[22px] flex justify-center items-center leading-[0.6] p-[7px_0_0] relative left-[-9px] top-[-3px] rounded-full">?</span>
-                Find us</a>
+            <a href="/find-us/" class="hidden sm:flex text-white font-heading text-sm">
+                <span class="bg-[#e94840] w-[23px] h-[22px] flex justify-center items-center leading-[0.6] relative rounded-full font-heading">?</span>
+                <span class="px-4">Find us</span></a>
         </div>
 
         <button id="toggle-menu-button" class="z-50 relative">

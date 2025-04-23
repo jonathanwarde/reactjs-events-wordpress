@@ -41,8 +41,8 @@ function enqueue_site_assets() {
         // 2) Your React entry
         echo '<script type="module" src="http://localhost:3000/web/src/vitereacttopsecretevents.jsx"></script>';
         // 3) Your SCSS/CSS entry
-        echo '<link rel="stylesheet" href="http://localhost:3000/web/src/css/vite.css" />';
         echo '<link rel="stylesheet" href="http://localhost:3000/web/src/scss/sitestyles.scss" />';
+        echo '<link rel="stylesheet" href="http://localhost:3000/web/src/css/vite.css" />';
         echo '<script type="module" src="http://localhost:3000/web/src/app.js" defer></script>';
     } else {
         $assets_dir = get_template_directory() . '/dist/assets/';
@@ -60,20 +60,20 @@ function enqueue_site_assets() {
                 true  
             );
         }
-        if ( ! empty( $css_files ) ) {
-            $css_file = basename( $css_files[0] );
-            wp_enqueue_style(
-                'topsecret-tailwind',
-                $assets_uri . $css_file,
-                [],   
-                null  
-            );
-        }
         if ( ! empty( $csssite_files ) ) {
             $csssite_file = basename( $csssite_files[0] );
             wp_enqueue_style(
                 'topsecret-main',
                 $assets_uri . $csssite_file,
+                [],   
+                null  
+            );
+        }
+        if ( ! empty( $css_files ) ) {
+            $css_file = basename( $css_files[0] );
+            wp_enqueue_style(
+                'topsecret-tailwind',
+                $assets_uri . $css_file,
                 [],   
                 null  
             );

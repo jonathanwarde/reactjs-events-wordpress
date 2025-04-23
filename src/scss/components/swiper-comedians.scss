@@ -1,0 +1,14 @@
+.comedians-swiper {
+  overflow: hidden;
+  .h1 {
+    width: auto;
+    width:fit-content;
+    margin: 0;
+  }
+}
+
+
+.swiper-wrapper{
+  transition-timing-function:linear!important;
+  padding: 5vh 0;
+}
