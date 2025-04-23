@@ -7,78 +7,62 @@ if(true) {
 ?>
 </main>
    
-<section class="swiper testimonials-slider bg-gray-800 text-center overflow-hidden">
-  <ul class="swiper-wrapper p-0" style="padding:0">
-    <li class="swiper-slide">
-      <div class="testimonials__item h-[60vh] max-h-[500px] ">
-        <div class="testimonials-slider__img-wrap relative overflow-hidden  w-full h-full inline-flex">
-          <!-- Image with gradient overlay -->
-          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/jw-home.jpg" loading="lazy" class="w-full h-full object-cover object-top transition-all duration-300 ease-in-out transform scale-125 " />
-        </div>
-        <!-- Blockquote with centered text -->
-        <blockquote class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 max-w-full mx-auto">
-          <p class="font-regular-light mb-4 p-0 text-2xl sm:text-4xl text-white">Top Secret is one of London’s best comedy clubs, it won’t be secret for long!</p>
-          <cite class="font-heading text-white text-2xl text-white bg-primary transform rotate-[-3deg] inline-flex py-1 px-2">Jack Whitehall</cite>
-        </blockquote>
-      </div>
-    </li>
+<?php
+// Get the Testimonials from the Options page
+$testimonials = get_field('testimonials', 'option');
 
-    <li class="swiper-slide">
-      <div class="testimonials__item h-[60vh] max-h-[500px] ">
-        <div class="testimonials-slider__img-wrap relative overflow-hidden  w-full h-full inline-flex">
-          <!-- Image with gradient overlay -->
-          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/tn.jpg" loading="lazy" class="w-full h-full object-cover object-top transition-all duration-300 ease-in-out transform scale-125 " />
-        </div>
-        <!-- Blockquote with centered text -->
-        <blockquote class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 max-w-full mx-auto">
-          <p class="font-regular-light mb-4 p-0 text-2xl sm:text-4xl text-white">Dude I had a blast. Favourite room in London.</p>
-          <cite class="font-heading text-white text-2xl bg-primary transform rotate-[-3deg] inline-flex py-1 px-2">Trevor Noah</cite>
-        </blockquote>
-      </div>
-    </li>
+if ($testimonials): ?>
+    <section class="swiper testimonials-slider bg-gray-800 text-center overflow-hidden">
+        <ul class="swiper-wrapper p-0" style="padding:0">
+            <?php foreach ($testimonials as $testimonial): ?>
+                <li class="swiper-slide">
+                    <div class="testimonials__item h-[60vh] max-h-[500px]">
+                        <div class="testimonials-slider__img-wrap relative overflow-hidden w-full h-full inline-flex">
+                            <img src="<?php echo esc_url($testimonial['testimonial_image']); ?>" loading="lazy" class="w-full h-full object-cover object-top transition-all duration-300 ease-in-out transform scale-125" />
+                        </div>
+                        <blockquote class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 max-w-full mx-auto">
+                            <p class="font-regular-light mb-4 p-0 text-2xl sm:text-4xl text-white"><?php echo esc_html($testimonial['testimonial_quote']); ?></p>
+                            <cite class="font-heading text-white text-2xl text-white bg-primary transform rotate-[-3deg] inline-flex py-1 px-2">
+                                <?php echo esc_html($testimonial['testimonial_citation']); ?>
+                            </cite>
+                        </blockquote>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </section>
+<?php endif; ?>
 
-    <li class="swiper-slide">
-      <div class="testimonials__item h-[60vh] max-h-[500px] ">
-        <div class="testimonials-slider__img-wrap relative overflow-hidden  w-full h-full inline-flex">
-          <!-- Image with gradient overlay -->
-          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/sw-pic.jpg" loading="lazy" class="w-full h-full object-cover object-top transition-all duration-300 ease-in-out transform scale-125 " />
-        </div>
-        <!-- Blockquote with centered text -->
-        <blockquote class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 max-w-full mx-auto">
-          <p class="font-regular-light mb-4 p-0 text-2xl sm:text-4xl text-white">Without a doubt my favourite London Club. It's my home.</p>
-          <cite class="font-heading text-white text-2xl bg-primary transform rotate-[-3deg] inline-flex py-1 px-2">Seann Walsh</cite>
-        </blockquote>
-      </div>
-    </li>
-  </ul>
-</section>
 
     <footer class="bg-primary">
       <section class="footer gap-4 grid grid-cols-1 m-auto max-w-7xl md:gap-10 md:grid-cols-3 px-4 py-6 sm:px-8 sm:py-16">
         <div>
             <h2 class="font-heading pb-8 text-2xl">Quick links</h2>
-            <ul>
-                <li><a href="/about">About</a></li>
-                <li><a href="/terms-conditions">T's&C's</a></li>
-                <li><a href="/privacy-policy/">Privacy Policy</a></li>
-                <li><a href="/top-secret-membership/">Members</a></li>
-                <li><a href="/faqs">FAQs</a></li>
-            </ul>
+            <?php
+            $footer_links = get_field('footer_links', 'option');
+            $company_address = get_field('company_address', 'option');
+            if ($footer_links):
+              echo '<ul class="footer-links">';
+              foreach ($footer_links as $link):
+                  $post_id = $link['footer_link_page'];
+                  $post = get_post($post_id); 
+                  ?>
+                  <li><a href="<?php echo esc_url(get_permalink($post)); ?>"><?php echo esc_html($post->post_title); ?></a></li>
+                  <?php
+              endforeach;
+              echo '</ul>';
+          endif;?>
 
         </div>
         <div>
             <h2 class="font-heading pb-8 text-2xl">Contact</h2>
-          <p>
-            <b>The Top Secret Comedy Club</b>
-            <br /> 170 Drury Lane
-            <br /> London,
-            <br /> WC2B 5PD
-            <br />
-          </p>
-
-          <br />
-          <a href="/privacy-policy">Privacy Policy</a>
-
+          <?php if($company_address):?>
+          <address>
+          <?php $formatted_address = nl2br(esc_html($company_address));
+          echo '<div class="company-address">' . $formatted_address . '</div>';
+          ?>
+          </address>
+            <?php endif; ?>
         </div>
         <div>
         <h2 class="font-heading pb-8 text-2xl">Keep in touch</h2>
@@ -112,11 +96,13 @@ if(true) {
         </div>
 
       </section>
+      <div class="bg-[var(--background-color)]">
         <div class="footer gap-4 grid grid-cols-1 m-auto max-w-7xl md:gap-10 md:grid-cols-3 px-4 py-6 sm:px-8 sm:py-16">
-            <img src="https://thetopsecretcomedyclub.co.uk/web/wp-content/uploads/2020/09/TSCC-LOGO-V2-e1599317839851.png" loading="lazy" />
-            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/tripadvisor2022.png" style="width: 56px; margin: 0 60px">
-            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/google-reviews.png" loading="lazy">
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/topsecretlogo.svg" class="w-full max-w-[200px] m-auto" loading="lazy" />
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/tripadvisor2022.png" class="w-full max-w-[100px] m-auto" loading="lazy">
+            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/google-reviews.png" loading="lazy" class="w-full max-w-[200px] m-auto">
         </div>
+          </div>
     </footer>
     <div id="datafetch"></div>
     </div><!--end site-wap__inner-->
@@ -127,61 +113,6 @@ if(true) {
     ?>
 
         <script>
-            function tabs() {
-                console.log("TABS footer script run...");
-
-                const tabsContainer = Array.from(
-                    document.querySelectorAll(".tabs-container")
-                );
-
-                if (!tabsContainer) {
-                    return;
-                }
-
-                tabsContainer.forEach((tabContainer) => {
-                    const tabsTab = Array.from(tabContainer.querySelectorAll(".tabs-tab"));
-
-                    const contentAreas = Array.from(
-                        tabContainer.querySelectorAll(".tabs-content")
-                    );
-
-
-                    tabsTab.forEach((tab) => {
-                        tab.addEventListener("click", (e) => {
-                            e.cancelBubble = true;
-
-                            tabsTab.forEach((tab) => {
-                                tab.classList.remove("-current");
-                            });
-
-                            tab.classList.add("-current");
-
-                            const dataTab = tab.getAttribute("data-tab");
-
-                            console.log('TAB', dataTab);
-
-                            const tabTarget = tabContainer.querySelector(
-                                '.tabs-content[data-tab="' + dataTab + '"]'
-                            );
-                            contentAreas.forEach((contentArea) => {
-                                contentArea.classList.remove("-show");
-                            });
-                            tabTarget.classList.add("-show");
-
-                            if(window.fullCal) {
-                                console.log('calendar added')
-                                window.fullCal.render();
-                            }
-
-                        });
-                    });
-                });
-            }
-            window.addEventListener('DOMContentLoaded', () => {
-                tabs();
-            })
-
-
             function closeSearch() {
                 const resultContainer = document.querySelector('.search_result');
                 if(resultContainer) {

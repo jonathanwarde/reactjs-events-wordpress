@@ -48,11 +48,21 @@ require_once get_template_directory() . '/functions/acf/comedian-upcoming-events
 require_once get_template_directory() . '/functions/acf/tickets-remaining.php';
 require_once get_template_directory() . '/functions/acf/venue.php';
 require_once get_template_directory() . '/functions/acf/bucket-shows.php';
-
+require_once get_template_directory() . '/functions/acf/front-page-fields.php';
+require_once get_template_directory() . '/functions/acf/front-page-cta-blocks.php';
+require_once get_template_directory() . '/functions/acf/front-page-testimonials.php';
+require_once get_template_directory() . '/functions/acf/footer-fields.php';
 
 /*foreach(glob(get_template_directory().'/functions/*.php') as $file) {
 
      include_once $file;
+}*/
+
+/*add_filter('allowed_block_types', 'my_allowed_block_types', 10, 2);
+function my_allowed_block_types($allowed_blocks, $post) {
+  if( is_front_page() ) {
+     return array();
+    }
 }*/
 
 function categories_to_posts(){
