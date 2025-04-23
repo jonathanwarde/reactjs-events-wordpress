@@ -12,7 +12,7 @@
    
     <title><?php wp_title() ?></title>
 </head>
-<body <?php body_class('topsecret, bg-black flex flex-col m-0 min-w-[320px] h-full min-h-screen font-regular'); ?>>
+<body <?php body_class('topsecret, bg-[var(--background-color)] flex flex-col m-0 min-w-[320px] h-full min-h-screen font-regular text-secondary'); ?>>
 <?php
     $displayBanner = get_field("display_banner", "option");
     if(true === $displayBanner) {

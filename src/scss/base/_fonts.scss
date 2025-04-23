@@ -30,30 +30,11 @@
   font-display: swap;
 }
 
-
-/*@font-face {
-  font-family: 'Montserrat';
+@font-face {
+  font-family: 'QuicksandLight';
+  src: url('./../assets/fonts/Quicksand-Light.ttf') format('truetype');
   font-style: normal;
-  font-weight: 300;
   font-display: swap;
-  src: url('#{$font-path}/montserrat-v18-latin-300.eot'); !* IE9 Compat Modes *!
-  src: local(''),
-  url('#{$font-path}/montserrat-v18-latin-300.eot?#iefix') format('embedded-opentype'), !* IE6-IE8 *!
-  url('#{$font-path}/montserrat-v18-latin-300.woff2') format('woff2'), !* Super Modern Browsers *!
-  url('#{$font-path}/montserrat-v18-latin-300.woff') format('woff'), !* Modern Browsers *!
-  url('#{$font-path}/montserrat-v18-latin-300.ttf') format('truetype'), !* Safari, Android, iOS *!
-  url('#{$font-path}/montserrat-v18-latin-300.svg#Montserrat') format('svg'); !* Legacy iOS *!
-}*/
+}
 
-//Icomoon
-/*@font-face {
-  font-family: $font-custom-name;
-  font-display: block; // still has a swap period, but if it doesn't load it has no meaning
-  src:
-    url('#{$font-path}/#{$font-custom-name}.woff2?#{$font-custom-query}') format('woff2'),
-    url('#{$font-path}/#{$font-custom-name}.ttf?#{$font-custom-query}') format('truetype'),
-    url('#{$font-path}/#{$font-custom-name}.woff?#{$font-custom-query}') format('woff'),
-    url('#{$font-path}/#{$font-custom-name}.svg?#{$font-custom-query}##{$font-custom-name}') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
+

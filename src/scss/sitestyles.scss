@@ -4,10 +4,22 @@
 //@import "base/typography";
 @import "components/swiper-comedians";
 @import "scripts/swiper";
+@import "components/cta-block";
 
 
 :root {
     --font-body: 'QuicksandRegular', sans-serif;
+    --font-bodylight: 'QuicksandLight', sans-serif;
     --font-bodybold: 'QuicksandBold', sans-serif;
     --font-display: 'SpecialElite', serif;
-  }
+
+    --color-primary: #e94840;
+    --color-secondary: #ffff;
+
+    --background-color: #2c2727;
+}
+
+body.-dark-mode {
+    --color-secondary: #000;
+    --background-color: #ffff;
+}

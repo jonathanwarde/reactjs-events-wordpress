@@ -22,4 +22,4 @@ function themeVars() { ?>
         }
     </style>
 <?php }
-add_action('wp_head', 'themeVars');
+//add_action('wp_head', 'themeVars');
