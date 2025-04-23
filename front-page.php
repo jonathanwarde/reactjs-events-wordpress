@@ -16,9 +16,9 @@ get_header();
 
 <section class="flex justify-center items-center flex-col text-center relative bg-black h-[calc(100vh-200px)] ">
     <div class="z-[1] text-white">
-        <h1 class="font-heading text-3xl sm:text-5xl uppercase text-primary"><?php echo esc_html($strapline); ?></h1>
-        <h2 id="whatson" class="w-fit relative m-auto font-heading text-black custom-clip-path"><?php echo esc_html($strapline2); ?></h2>
-        <p class="body-regular"><?php echo esc_html($strap_subline); ?></p>
+        <h1 class="font-heading text-3xl sm:text-5xl uppercase text-primary" id="anim-split-text-1"><?php echo esc_html($strapline); ?></h1>
+        <h2 class="w-fit relative m-auto font-heading text-black" id="anim-split-text-2"><?php echo esc_html($strapline2); ?></h2>
+        <p class="body-regular opacity-0 transition-opacity" id="anim-split-text-3"><?php echo esc_html($strap_subline); ?></p>
     </div>
     <img src="<?php echo esc_url(get_template_directory_uri()); ?>/images/audience.jpg" class="absolute object-cover top-0 h-full w-full z-[0]">
 </section>

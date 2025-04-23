@@ -23,6 +23,12 @@
     clip-path: polygon(0 0, 100% 8%, 100% 93%, 0 100%);
     background-color: #fff;
     z-index: -1;
+    transition: all .5s ease;
+    transition-delay: .2s;
+    opacity: 0;
+  }
+  .custom-clip-path.added:after {
+    opacity: 1; 
   }
   .text-primary {
     color: var(--color-primary);
