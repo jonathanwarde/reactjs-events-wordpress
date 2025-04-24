@@ -1,9 +1,10 @@
 <?php
-if(true) {
+/*if(true) {
     include_once('parts/cta-link-to-available-events.php');
 } else {
     include_once('parts/cta-book.php');
-}
+}*/
+include_once('parts/cta-book.php');
 ?>
 </main>
    
@@ -120,6 +121,6 @@ if ($testimonials): ?>
                 }
             }
         </script>
-    <?php include_once('parts/bucket-message.php');?>
+    <!--?php include_once('parts/bucket-message.php');? -->
     </body>
     </html>

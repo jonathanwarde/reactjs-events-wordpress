@@ -1,10 +1,13 @@
 
 @import "vars";
+@import "mixins";
 @import "base/fonts";
+@import "components/nav-toggler";
 //@import "base/typography";
 @import "components/swiper-comedians";
 @import "scripts/swiper";
 @import "components/cta-block";
+@import "components/sticky-cta";
 
 
 :root {
@@ -14,7 +17,7 @@
     --font-display: 'SpecialElite', serif;
 
     --color-primary: #e94840;
-    --color-secondary: #ffff;
+    --color-secondary: #fffdf6;
 
     --background-color: #2c2727;
 }

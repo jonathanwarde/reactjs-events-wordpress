@@ -15,8 +15,8 @@ get_header();
 ?>
 
 <section class="flex justify-center items-center flex-col text-center relative bg-black h-[calc(100vh-200px)] ">
-    <div class="z-[1] text-white">
-        <h1 class="font-heading text-3xl sm:text-5xl uppercase text-primary" id="anim-split-text-1"><?php echo esc_html($strapline); ?></h1>
+    <div class="px-2 z-[1] text-white">
+        <h1 class="font-heading text-2xl sm:text-5xl lg:text-6xl uppercase text-primary" id="anim-split-text-1"><?php echo esc_html($strapline); ?></h1>
         <h2 class="w-fit relative m-auto font-heading text-black" id="anim-split-text-2"><?php echo esc_html($strapline2); ?></h2>
         <p class="body-regular opacity-0 transition-opacity" id="anim-split-text-3"><?php echo esc_html($strap_subline); ?></p>
     </div>

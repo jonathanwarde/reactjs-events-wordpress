@@ -33,6 +33,9 @@
   .text-primary {
     color: var(--color-primary);
   }
+  .hover-text-primary {
+    color: var(--color-primary);
+  }
   .text-secondary {
     color: var(--color-secondary);
   }

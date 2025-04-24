@@ -8,6 +8,7 @@ const navToggler = () => {
       menu.classList.toggle('hidden');
       open.classList.toggle('hidden');
       close.classList.toggle('hidden');
+      button.classList.toggle('open');
     });
 }
 

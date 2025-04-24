@@ -25,11 +25,14 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div>
-<div id="toggle-menu" class="hidden font-bold text-red-100 text-right text-3xl bg-gray-800 fixed top-0 left-0 h-screen w-screen flex flex-col items-center justify-center ">
-    <?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
-    <div class="hidden md:block">
-        <div><div style="width:163px"></div><span>4.5/5 Trip Advisor</span></div>
-        <div><div style="width:169px"></div><span>4.9 Google</span></div>
+<div id="toggle-menu" class="bg-secondary fixed flex flex-col font-heading h-screen items-center justify-center left-0 lg:text-4xl text-3xl text-black text-right top-0 w-screen z-10 hidden">
+    <?php wp_nav_menu( array( 
+        'theme_location' => 'main-menu',
+        'menu_class' => 'menu text-center'
+         ) ); ?>
+    <div class="flex gap-4 md:flex pt-16 sm:text-3xl text-sm">
+        <div><span>4.5/5 Trip Advisor</span></div>
+        <div><span>4.9 Google</span></div>
     </div>
     </div>
     <div>
@@ -51,7 +54,7 @@
                 <span class="px-4">Find us</span></a>
         </div>
 
-        <button id="toggle-menu-button" class="z-50 relative">
+        <!--button id="toggle-menu-button" class="z-50 relative">
             <span class="sr-only">Toggle Menu</span>
             <div id="open" class="h-7 flex flex-col items-end justify-between">
                 <span class="block h-0.5 w-8 bg-red-900 rounded-full"></span>
@@ -62,7 +65,11 @@
                 <span class="block h-0.5 w-8 bg-red-100 rounded-full origin-left transform rotate-45 translate-y-0.5"></span>
                 <span class="block h-0.5 w-8 bg-red-100 rounded-full origin-left transform -rotate-45 -translate-y-0.5"></span>
             </div>
-        </button>
+        </button -->
+        <button class="navbar-toggler js-navbar-toggler" id="toggle-menu-button" type="button">
+        <span class="icon-left"></span>
+        <span class="icon-right"></span>
+    </button>
     </div>
 </header>
 <main class="flex flex-col w-full flex-grow">
