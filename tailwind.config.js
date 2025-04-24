@@ -22,6 +22,8 @@ module.exports = {
         spacing: {
             15: '60px', 
         },
+        colors: {
+          primary: 'var(--text-primary)',  
     } },
     plugins: []
   }

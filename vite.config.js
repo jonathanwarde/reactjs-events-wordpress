@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => ({
     outDir:      'dist',
     emptyOutDir: true,
     manifest:    true,
+    assetsDir: 'assets',
     rollupOptions: {
       input: {
         reactevents: path.resolve(__dirname, "src/vitereacttopsecretevents.jsx"),
@@ -35,6 +36,10 @@ export default defineConfig(({ mode }) => ({
       },
       output: {
         assetFileNames: 'assets/[name].[hash].[ext]',
+        manualChunks: {
+          // Manually chunk the necessary dependencies to avoid duplication
+          vendor: ['react', 'react-dom'], // Include React and other dependencies in a separate chunk
+        },
       }
     }
   },
