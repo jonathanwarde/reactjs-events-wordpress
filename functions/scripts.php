@@ -44,17 +44,41 @@ function enqueue_site_assets() {
         echo '<link rel="stylesheet" href="http://localhost:3000/web/src/scss/sitestyles.scss" />';
         echo '<link rel="stylesheet" href="http://localhost:3000/web/src/css/vite.css" />';
         echo '<script type="module" src="http://localhost:3000/web/src/app.js" defer></script>';
+
     } else {
         $assets_dir = get_template_directory() . '/dist/assets/';
         $assets_uri = get_template_directory_uri() . '/dist/assets/';
         $js_files  = glob( $assets_dir . 'reactevents-*.js' );
-        $css_files = glob( $assets_dir . 'styles-*.css' );
-        $csssite_files = glob( $assets_dir . 'sitestyles-*.css' );
+        $jssite_files  = glob( $assets_dir . 'app-*.js' );
+        $css_files = glob( $assets_dir . 'styles.*.css' );
+        $csssite_files = glob( $assets_dir . 'sitestyles.*.css' );
+        $cssreact_files = glob( $assets_dir . 'reactevents.*.css' );
+
+      
         if ( ! empty( $js_files ) ) {
             $js_file = basename( $js_files[0] );
             wp_enqueue_script(
                 'reactevents',
                 $assets_uri . $js_file,
+                [],   
+                null, 
+                true  
+            );
+        }
+        if ( ! empty( $cssreact_files ) ) {
+            $cssreact_file = basename( $cssreact_files[0] );
+            wp_enqueue_style(
+                'reactevents-css',
+                $assets_uri . $cssreact_file,
+                [],   
+                null  
+            );
+        }
+        if ( ! empty( $jssite_files ) ) {
+            $jssite_file = basename( $jssite_files[0] );
+            wp_enqueue_script(
+                'topsecret-app',
+                $assets_uri . $jssite_file,
                 [],   
                 null, 
                 true  
@@ -81,3 +105,12 @@ function enqueue_site_assets() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_site_assets' );
+
+function add_module_type_to_react_script($tag, $handle) {
+    if ('reactevents' === $handle) {
+        return str_replace('<script ', '<script type="module" ', $tag);
+    }
+    return $tag;
+}
+
+add_filter('script_loader_tag', 'add_module_type_to_react_script', 10, 2);
