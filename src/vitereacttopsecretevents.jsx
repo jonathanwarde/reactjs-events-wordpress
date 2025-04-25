@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {CalendarDatePicker} from './js/reactcomponents/Calendar';
+import { CalendarDatePicker } from './js/reactcomponents/calendar/Calendar.jsx';
+
 
 function App() {
-  return <div className="text-2xl font-heading">
+  return <div className="">
     <CalendarDatePicker />
-    Entry point for events...
     </div>;
 }
 const element = document.getElementById('react-root');
