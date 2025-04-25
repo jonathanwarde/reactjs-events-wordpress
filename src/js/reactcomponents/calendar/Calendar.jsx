@@ -21,8 +21,12 @@ export const CalendarDatePicker = () => {
     setIsOpen(!isOpen);
   };
 
+
   const today = new Date();
   const todayFormatted = today.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
+
+  const twoDaysAgo = new Date(today);
+  twoDaysAgo.setDate(today.getDate() - 3); 
 
   const tomorrow = new Date(today);
         tomorrow.setDate(today.getDate() + 1);
@@ -31,6 +35,8 @@ export const CalendarDatePicker = () => {
   const dayAfterTomorrow = new Date(today);
         dayAfterTomorrow.setDate(today.getDate() + 2);
   const dayAfterTomorrowFormatted = dayAfterTomorrow.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
+
+  console.log('selected date ', selectedDate, ' tomorrow ', tomorrowFormatted, ' dayafter', dayAfterTomorrowFormatted)
 
   function handleDateClick(date) {
     setSelectedDate(date)
@@ -43,20 +49,27 @@ export const CalendarDatePicker = () => {
             <ol className="flex gap-4">
                 <li className="relative">
                     <span class="absolute text-xs bg-primary z-10 px-1 left-6 top-[-4px]">Today</span>
-                    <CalButton date={todayFormatted} onClick={() => handleDateClick(todayFormatted)} />
+                    <CalButton date={todayFormatted} onClick={() => handleDateClick(todayFormatted)} isSelected={selectedDate === todayFormatted} />
                 </li>
                 <li>
-                    <CalButton date={tomorrowFormatted} onClick={() => handleDateClick(tomorrowFormatted)} />
+                    <CalButton date={tomorrowFormatted} onClick={() => handleDateClick(tomorrowFormatted)} isSelected={selectedDate === tomorrowFormatted} />
                 </li>
                 <li>
-                    <CalButton date={dayAfterTomorrowFormatted} onClick={() => handleDateClick(dayAfterTomorrowFormatted)}  />
+                    <CalButton date={dayAfterTomorrowFormatted} onClick={() => handleDateClick(dayAfterTomorrowFormatted)} isSelected={selectedDate === dayAfterTomorrowFormatted} />
                 </li>
                 <li className="relative">
                 <button onClick={handleClick} className="border border-white flex flex-col h-[80px] justify-center leading-none text-sm w-[80px] custom-triangle relative">
                     <span>other</span><span>day</span>
                 </button>
                 {isOpen && (
-                    <DatePicker selected={startDate} onChange={handleChange} inline className="absolute" />
+                    <DatePicker 
+                    selected={startDate} 
+                    onChange={handleChange} 
+                    minDate={twoDaysAgo} 
+                    filterDate={(date) => date >= twoDaysAgo} 
+                    inline 
+                    className="absolute" 
+                    />
                 )}
                 </li>
             </ol>
