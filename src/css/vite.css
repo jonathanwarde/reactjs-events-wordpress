@@ -30,6 +30,22 @@
   .custom-clip-path.added:after {
     opacity: 1; 
   }
+  .custom-triangle:after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+  }
   .text-primary {
     color: var(--color-primary);
   }

@@ -4,6 +4,7 @@ import CalButton from "./CalButton.jsx"
 
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import '../../../scss/react-components/datepicker.scss';
 
 export const CalendarDatePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -38,9 +39,10 @@ export const CalendarDatePicker = () => {
   return (
       <>
       <div className="flex font-heading gap-x-4 justify-between m-auto max-w-7xl md:gap-x-15 px-4 py-6 sm:px-8 sm:py-16">
-          <h3>{selectedDate}</h3>
+          <h3 className="text-3xl">{selectedDate}</h3>
             <ol className="flex gap-4">
-                <li>
+                <li className="relative">
+                    <span class="absolute text-xs bg-primary z-10 px-1 left-6 top-[-4px]">Today</span>
                     <CalButton date={todayFormatted} onClick={() => handleDateClick(todayFormatted)} />
                 </li>
                 <li>
@@ -49,12 +51,12 @@ export const CalendarDatePicker = () => {
                 <li>
                     <CalButton date={dayAfterTomorrowFormatted} onClick={() => handleDateClick(dayAfterTomorrowFormatted)}  />
                 </li>
-                <li>
+                <li className="relative">
                 <button onClick={handleClick} className="border border-white flex flex-col h-[80px] justify-center leading-none text-sm w-[80px] custom-triangle relative">
                     <span>other</span><span>day</span>
                 </button>
                 {isOpen && (
-                    <DatePicker selected={startDate} onChange={handleChange} inline />
+                    <DatePicker selected={startDate} onChange={handleChange} inline className="absolute" />
                 )}
                 </li>
             </ol>
