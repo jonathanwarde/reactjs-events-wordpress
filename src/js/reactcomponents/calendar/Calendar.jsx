@@ -6,17 +6,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import '../../../scss/react-components/datepicker.scss';
 
-export const CalendarDatePicker = () => {
+export const CalendarDatePicker = ({ selectedDate, setSelectedDate, fetchData }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState('Today')
+  //const [selectedDate, setSelectedDate] = useState('Today')
   const [isOpen, setIsOpen] = useState(false);
   const handleChange = (date) => {
     setStartDate(date); 
+    console.log('date?  ', date)
     const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
     setSelectedDate(formattedDate); 
+    fetchData(formattedDate); 
     setIsOpen(false);
   };
   const handleClick = (e) => {
+      console.log('date???  ', e)
     e.preventDefault();
     setIsOpen(!isOpen);
   };
@@ -49,16 +52,30 @@ export const CalendarDatePicker = () => {
             <ol className="flex gap-4">
                 <li className="relative">
                     <span class="absolute text-xs bg-primary z-10 px-1 left-6 top-[-4px]">Today</span>
-                    <CalButton date={todayFormatted} onClick={() => handleDateClick(todayFormatted)} isSelected={selectedDate === todayFormatted} />
+                    <CalButton 
+                    date={todayFormatted} 
+                    onClick={() => { setSelectedDate(todayFormatted); fetchData(todayFormatted); handleDateClick(todayFormatted); }}
+                    isSelected={selectedDate === todayFormatted}
+                    />
                 </li>
                 <li>
-                    <CalButton date={tomorrowFormatted} onClick={() => handleDateClick(tomorrowFormatted)} isSelected={selectedDate === tomorrowFormatted} />
+                    <CalButton 
+                    date={tomorrowFormatted} 
+                    onClick={() => { setSelectedDate(tomorrowFormatted); fetchData(tomorrowFormatted); handleDateClick(tomorrowFormatted); }}
+                    isSelected={selectedDate === tomorrowFormatted}
+                    />
                 </li>
                 <li>
-                    <CalButton date={dayAfterTomorrowFormatted} onClick={() => handleDateClick(dayAfterTomorrowFormatted)} isSelected={selectedDate === dayAfterTomorrowFormatted} />
+                <CalButton 
+                    date={dayAfterTomorrowFormatted} 
+                    onClick={() => { setSelectedDate(dayAfterTomorrowFormatted); fetchData(dayAfterTomorrowFormatted); handleDateClick(dayAfterTomorrowFormatted); }}
+                    isSelected={selectedDate === dayAfterTomorrowFormatted}
+                    />
                 </li>
                 <li className="relative">
-                <button onClick={handleClick} className="border border-white flex flex-col h-[80px] justify-center leading-none text-sm w-[80px] custom-triangle relative">
+                <button onClick={handleClick} 
+                        className={`border border-white flex flex-col h-[80px] justify-center leading-none text-sm w-[80px] custom-triangle relative ${isOpen ? 'bg-primary' : ''
+                      }`}>
                     <span>other</span><span>day</span>
                 </button>
                 {isOpen && (
