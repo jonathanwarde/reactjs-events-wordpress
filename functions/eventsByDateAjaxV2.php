@@ -15,203 +15,118 @@ function jw_events_by_date_v2()
 {
     global $wpdb;
 
-    $date = $_POST['date'];
+    $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : null;
 
-    $_today = new DateTime('');
-    $_today->format("Y-m-d");
+    // Determine if the requested date is in the past
+    $today        = new DateTime('');
+    $chosenDate   = $date ? new DateTime($date) : $today;
+    $eventIsPast  = ($today->format("Y-m-d") > $chosenDate->format("Y-m-d"));
 
-    if(isset($date)){
-        //$event_date = '2023-04-07'; // SET AS QUERY
-        $event_date = $date; // SET AS QUERY
-    } else {
-        //$event_date = date('Y/m/d h:i:s a', time()); // SET AS QUERY
-        $event_date = $_today;
-    }
+    // Use the provided date or default to today
+    $event_date = $date ?: $today->format("Y-m-d");
 
-    $today = new DateTime('');
-    $chosenDate = new DateTime($date);
-    if($today->format("Y-m-d") > $chosenDate->format("Y-m-d")) {
-        $eventIsPast = true;
-    } else {
-        $eventIsPast = false;
-    }
-
-     $events_query_args = array(
-        'post_type' => 'event',
-        'post_status' => 'publish',
+    $events_query_args = array(
+        'post_type'      => 'event',
+        'post_status'    => 'publish',
         'posts_per_page' => -1,
-        'meta_query' => array(
+        'meta_query'     => array(
             array(
-                'key' => 'start_date',
-                'value' => $event_date,
+                'key'     => 'start_date',
+                'value'   => $event_date,
                 'compare' => '=',
-                'type' => 'DATE'
+                'type'    => 'DATE'
             ),
             'time_clause' => array(
-                'key' => 'start_time',
+                'key'     => 'start_time',
                 'compare' => 'EXISTS',
             ),
         ),
-         'orderby' => array(
-             'time_clause' => 'ASC',
-         ),
+        'orderby' => array(
+            'time_clause' => 'ASC',
+        ),
     );
 
-    $events_query = new WP_Query($events_query_args);
-    $events = $events_query->posts;
+    $events_query   = new WP_Query($events_query_args);
+    $events         = $events_query->posts;
+    $response_events = [];
 
     if ($events) {
-        // Add 'is_sold_out' to each event and create a new array to hold them
-        $sorted_events = array();
-
+        // Enrich events
         foreach ($events as $e) {
-            $event_id = $e->ID;
-            $soldOut = noTicketsLeft($event_id);
-
-            // Add a new property to the event object to indicate if it's sold out
-            $e->is_sold_out = $soldOut;
-
-            $venue = get_field('venue', $event_id);
-            $e->is_kingsway = ($venue === 'kingsway') ? 1 : 0;
-
-            // Add the event to the sorted_events array
-            $sorted_events[] = $e;
+            $e->is_sold_out = noTicketsLeft($e->ID);
+            $e->is_kingsway = (get_field('venue', $e->ID) === 'kingsway') ? 1 : 0;
         }
 
-        usort($sorted_events, function($a, $b) {
-            // Sort by 'is_sold_out' first (non-sold-out events first)
-            /*if ($a->is_sold_out !== $b->is_sold_out) {
-                return $a->is_sold_out - $b->is_sold_out;
-            }*/
-
-            // First, sort by 'start_time'
-            $timeComparison = strcmp(get_field('start_time', $a->ID), get_field('start_time', $b->ID));
-            if ($timeComparison !== 0) {
-                return $timeComparison;
+        // Sort by time, then kingsway
+        usort($events, function($a, $b) {
+            $timeA = get_field('start_time', $a->ID);
+            $timeB = get_field('start_time', $b->ID);
+            $cmp   = strcmp($timeA, $timeB);
+            if ($cmp !== 0) {
+                return $cmp;
             }
-
-            // If both events have the same 'is_sold_out' status, sort by 'is_kingsway' (Kingsway events first)
             return $b->is_kingsway - $a->is_kingsway;
         });
 
-
-        // Now loop through the sorted events
-        foreach ($sorted_events as $e) {
-            $event_id = $e->ID;
-            $title = $e->post_title;
-            $_title = $title = '' ? 'TBC' : $title;
-
-            $soldOut = $e->is_sold_out;
-
-            if (true === $soldOut) {
-                $btnText = 'sold out';
-                $btnStyle = "style='pointer-events: none;background-color: #8f2f2a;'";
-            } else {
-                $btnText = 'book';
-                $btnStyle = '';
-            }
-
-            $time = get_field('start_time', $event_id);
-            $_time = date("g:iA", strtotime($time));
-            $doors = get_field('doors_time', $event_id);
-            $_doors = date("g:iA", strtotime($doors));
-
-            $price = get_field('event_price', $event_id);
-            $bucketShowMessage = bucket_show_message($price);
-
-            if (is_null($price) || $price == 'FREE' || $price == 0 || $price == '') {
-                $cur = '';
-                $price = 'FREE';
-            } else {
-                $cur = '£';
-            }
-
+        // Build JSON-friendly array
+        foreach ($events as $e) {
+            $event_id   = $e->ID;
+            $time       = get_field('start_time', $event_id);
+            $doors      = get_field('doors_time', $event_id);
+            $price      = get_field('event_price', $event_id);
             $concession = get_field('event_concessions_price', $event_id);
-            if ($concession == 'FREE') {
+
+            // Normalize price
+            if (is_null($price) || $price === 'FREE' || $price == 0 || $price === '') {
+                $price    = 'FREE';
                 $currency = '';
             } else {
                 $currency = '£';
             }
 
-            if ($concession && $concession != 'FREE') {
-                $concession = ''.$concession;
-            } elseif (is_null($concession)) {
-                $concession = 'FREE';
-                $currency = '';
+            // Normalize concession
+            if ($concession === 'FREE' || is_null($concession)) {
+                $concession      = 'FREE';
+                $conc_currency   = '';
             } else {
-                $concession = '';
+                $conc_currency = '£';
             }
 
-            $ticket = get_field('book_now_url', $event_id);
-            $link = get_post_permalink($event_id);
-
-            $restrictBooking = get_field('non_disclosure_agreement', $event_id);
-            $lastFewTickets = lastFewTickets($event_id);
-            $labelText = '';
-
+            // Comedian IDs
             $comedianIDs = [];
-            $comedians = get_field('comedians', $event_id);
-
-            foreach ($comedians as $comedian) {
-                if (isset($comedian->ID)) {
-                    $comedianIDs[] = $comedian->ID;
-                } else {
-                    $comedianIDs[] = $comedian;
-                }
+            foreach ((array) get_field('comedians', $event_id) as $comedian) {
+                $comedianIDs[] = is_object($comedian) ? $comedian->ID : $comedian;
             }
 
-            $order = array(15163, 16554, 17648, 17649);
-            $orderMap = array_flip($order);
-
-            $venue = getVenuePin($event_id);
-            $mc = get_field('event_mc', $event_id) ? 'data-event-mc="'.get_field('event_mc', $event_id).'"' : '';
-
-            echo "<li class='event--item' data-event-comedians='".json_encode($comedianIDs)."' ".$mc.">";
-            if ($soldOut === true) {
-                echo '<div class="sold-out">sold out</div>';
-            } elseif (1 == $lastFewTickets) {
-                $ticketsLeft = get_field('tickets_remaining', $event_id);
-                $labelText = 'only ' . $ticketsLeft . ' tickets left';
-                echo '<div class="sold-out">'.$labelText.'</div>';
-            }
-            echo "<div class='event--details'>";
-            echo '<h3 class="h2">'.$_title.$venue.'</h3>';
-            echo '<div class="event--time">';
-            echo '<span>Starts: '.$_time.'</span><span>Doors: '.$_doors.'</span>';
-            echo '</div>';
-            echo '<div class="event--price">';
-            echo '<span class="h2">'.$cur.$price.'</span>';
-            if ($price != 'FREE' && $price != $concession) {
-                echo '<span>Concessions: <span class="h2">' . $currency . $concession . '</span>';
-            }
-            echo '</span>';
-            echo '</div>';
-            echo '<ul class="comedians__list block-list"></ul>';
-            // Bucket list message on £1, £3 and FREE shows
-            echo $bucketShowMessage . '<!--HEY '. gettype($price).' price '.$price.'-->';
-            echo '</div>';
-            echo '<div class="event--ctas">';
-            echo '<a href="'.$link.'" class="btn -alt">more</a>';
-            if ($eventIsPast) {
-                echo '<p>this event is finished</p>';
-            } else {
-                if ($restrictBooking) {
-                    echo '<button class="btn btn--icon js-nda-modal-trigger" data-book="'.$ticket.'">booking restricted</button>';
-                } else {
-                    echo '<a class="btn btn--icon" href="'.$ticket.'" '.$btnStyle.'>'.$btnText.'</a>';
-                }
-            }
-            echo '</div>';
-            echo '</li>';
+            $response_events[] = [
+                'id'                   => $event_id,
+                'title'                => $e->post_title ?: 'TBC',
+                'start_time'           => date('g:ia', strtotime($time)),
+                'doors_time'           => date('g:ia', strtotime($doors)),
+                'price'                => $price,
+                'currency'             => $currency,
+                'concession'           => $concession,
+                'concession_currency'  => $conc_currency,
+                'is_sold_out'          => (bool) $e->is_sold_out,
+                'is_kingsway'          => (bool) $e->is_kingsway,
+                'ticket_url'           => get_field('book_now_url', $event_id),
+                'permalink'            => get_permalink($event_id),
+                'venue'                => get_field('venue', $event_id),
+                'comedians'            => $comedianIDs,
+                'nda_restricted'       => (bool) get_field('non_disclosure_agreement', $event_id),
+                'last_few_tickets'     => (bool) lastFewTickets($event_id),
+            ];
         }
-    } else {
-        echo '<p class="h3">No events found for '.$date. '. Try again later, or <a href="/contact-us/" style="text-decoration: underline">contact us here</a></p>';
     }
 
-
-    //echo $response;
+    // Return as JSON
+    header('Content-Type: application/json');
+    echo json_encode([
+        'date_requested' => $event_date,
+        'is_past'        => $eventIsPast,
+        'events'         => $response_events,
+    ], JSON_PRETTY_PRINT);
     exit;
 }
 add_action('wp_ajax_jw_events_by_date_v2', 'jw_events_by_date_v2');
 add_action('wp_ajax_nopriv_jw_events_by_date_v2', 'jw_events_by_date_v2');
-
