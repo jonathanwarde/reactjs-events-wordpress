@@ -1,28 +1,61 @@
 import React from 'react';
 
-export const EventCard = ({ title }) => {
+export const EventCard = ({event}) => {
+
+  const venueAddress = () => {
+    switch(event.venue) {
+      case "kingsway":
+        return "23 Kingsway";
+        break;
+      case "drurylanebasement":
+        return "170 Drury Lane (basement)";
+        break;
+      case "drurylaneground":
+        return "170 Drury Lane (ground floor)";
+        break;
+      default:
+        return "170 Drury Lane";
+    }
+  }
+
+  const venuePin = () => {
+    switch(event.venue) {
+      case "kingsway":
+        return "kingsway";
+        break;
+      case "drurylanebasement":
+        return "drurylane";
+        break;
+      case "drurylaneground":
+        return "drurylane";
+        break;
+      default:
+        return "drurylane";
+    }
+  }
+
   return (
     <li className="relative p-5 border border-white flex flex-col">
       <div className="flex-1">
         <h3 className="text-2xl font-semibold mb-2 flex items-center">
-          {title}
+          {event.title}
           <span className="ml-2 text-sm text-gray-300">
             <a
-              href="/find-us/#kingsway"
+              href={`/find-us/#${venuePin()}`}
               target="_blank"
               className="inline-flex items-center"
             >
               <svg className="w-4 h-4 mr-1">
                 <use href="#icon-search-pin" />
               </svg>
-              23 Kingsway
+              {venueAddress()}
             </a>
           </span>
         </h3>
 
         <div className="flex justify-between pb-4 text-sm">
-          <span>Starts: 8:00PM</span>
-          <span>Doors: 7:00PM</span>
+          <span>Starts: {event.start_time}</span>
+          <span>Doors: {event.doors_time}</span>
         </div>
 
         <div className="flex justify-between pb-4 text-sm">
@@ -35,7 +68,7 @@ export const EventCard = ({ title }) => {
 
         <ul className="flex flex-wrap mb-4 -mx-2">
           {/* Comedian 1 */}
-          <li className="w-full md:w-1/3 px-2 mb-4 flex flex-col items-center">
+          <li className="w-full md:w-1/3 px-2 mb-4 flex flex-col items-center relative">
             <a
               href="https://thetopsecretcomedyclub.co.uk/comedians/thomas-green/"
               className="absolute inset-0"
@@ -61,7 +94,7 @@ export const EventCard = ({ title }) => {
           </li>
 
           {/* Secret Guest */}
-          <li className="w-full md:w-1/3 px-2 mb-4 flex flex-col items-center">
+          <li className="w-full md:w-1/3 px-2 mb-4 flex flex-col items-center relative">
             <a
               href="https://…/special-celebrity-guest/"
               className="absolute inset-0"
@@ -89,13 +122,13 @@ export const EventCard = ({ title }) => {
 
       <div className="flex justify-between mt-4 space-x-2">
         <a
-          href="https://…/friday-stand-up-comedy-8pm-show-13/"
+          href={event.permalink}
           className="flex-1 text-center py-2 border border-transparent bg-black text-white rounded-md min-w-[160px]"
         >
           more
         </a>
-        <a
-          href="https://tickets.…"
+        <a 
+          href={event.ticket_url}
           className="flex-1 text-center py-2 border border-white text-white rounded-md min-w-[160px]"
         >
           book
