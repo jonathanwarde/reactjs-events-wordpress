@@ -55,6 +55,7 @@ function jw_events_by_date_v2()
         foreach ($events as $e) {
             $e->is_sold_out = noTicketsLeft($e->ID);
             $e->is_kingsway = (get_field('venue', $e->ID) === 'kingsway') ? 1 : 0;
+            $e->venue = getVenuePin($e->ID);
         }
 
         // Sort by time, then kingsway
