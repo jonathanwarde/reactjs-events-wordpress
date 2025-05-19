@@ -29,6 +29,7 @@ function jw_get_comedian_for_event()
     foreach($allComedians as $comedian) {
         $ID = $comedian->ID;
         $name = $comedian->post_title;
+        $title = $comedian->post_name;
     
         $secret_comedian_titles = [
             'top-secret-acts-tba',
@@ -45,6 +46,7 @@ function jw_get_comedian_for_event()
         $response_comedian[] = [
             'id'                   => $ID,
             'title'                => $name,
+            'name'                 => $title,
             'secret'               => $secret,
             'link'                 => $link,
             'image_medium'         => $imageMedium,
