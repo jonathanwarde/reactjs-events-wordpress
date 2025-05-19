@@ -11,6 +11,7 @@ require_once get_template_directory() . '/functions/scripts.php';
 require_once get_template_directory() . '/functions/addMenu.php';
 require_once get_template_directory() . '/functions/cleanUp.php';
 require_once get_template_directory() . '/functions/comedianFields.php';
+require_once get_template_directory() . '/functions/getComediansForEvent.php';
 require_once get_template_directory() . '/functions/editEventRedirect.php';
 require_once get_template_directory() . '/functions/eventsFields.php';
 require_once get_template_directory() . '/functions/getComedians.php';
