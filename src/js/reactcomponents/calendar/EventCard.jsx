@@ -40,7 +40,7 @@ export const EventCard = ({event}) => {
       <div className="flex-1">
         <h3 className="text-2xl font-semibold mb-2 flex flex-col items-start">
           {event.title}
-          <span className="ml-2 text-sm text-gray-300">
+          <span className="text-sm text-gray-300">
             <a
               href={`/find-us/#${venuePin()}`}
               target="_blank"
@@ -69,7 +69,7 @@ export const EventCard = ({event}) => {
             </span>
             )}
         </div>
-        <ul className="flex flex-wrap mb-4 -mx-2 min-h-[187px]">
+        <ul className="flex flex-wrap mb-4 -mx-2 min-h-[187px] relative">
         <EventCardComedians event={event} />
         </ul>
       </div>
