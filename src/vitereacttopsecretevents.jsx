@@ -40,7 +40,7 @@ const App = () => {
   };
 
   const listFetchedEvents = fetchedData.events.map(_event =>
-    <EventCard title={_event.title} />
+    <EventCard event={_event} />
   );
 
   return (
